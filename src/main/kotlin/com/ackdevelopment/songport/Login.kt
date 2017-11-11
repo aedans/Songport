@@ -22,9 +22,7 @@ fun Routing.login() {
                     DefaultHttpClient,
                     exec,
                     providerLookup = { loginProviders[it.type] },
-                    urlProvider = { login, settings ->
-                        "http://localhost/login"
-                    }
+                    urlProvider = { _, settings -> "http://localhost/login/${settings.name}" }
             )
         }
 
@@ -37,7 +35,7 @@ fun Routing.login() {
         handle {
             val principal = call.authentication.principal<OAuthAccessTokenResponse>()
             if (principal != null) {
-//                call.loggedInSuccessResponse(principal)
+                call.loggedInSuccessResponse(principal)
             } else {
                 call.loginPage()
             }
@@ -64,6 +62,24 @@ private suspend fun ApplicationCall.loginPage() {
                         +key
                     }
                 }
+            }
+        }
+    }
+}
+
+private suspend fun ApplicationCall.loggedInSuccessResponse(callback: OAuthAccessTokenResponse) {
+    respondHtml {
+        head {
+            title { +"Logged in" }
+        }
+
+        body {
+            h1 {
+                +"You are logged in"
+            }
+
+            p {
+                +"Your token is $callback"
             }
         }
     }
