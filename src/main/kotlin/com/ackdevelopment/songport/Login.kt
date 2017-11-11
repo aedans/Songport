@@ -8,7 +8,9 @@ import org.jetbrains.ktor.client.DefaultHttpClient
 import org.jetbrains.ktor.html.respondHtml
 import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.oauthAtLocation
+import org.jetbrains.ktor.response.respondRedirect
 import org.jetbrains.ktor.routing.Routing
+import org.jetbrains.ktor.routing.param
 
 @location("/login/{type?}")
 class Login(val type: String = "")
@@ -20,8 +22,16 @@ fun Routing.login() {
                     DefaultHttpClient,
                     exec,
                     providerLookup = { loginProviders[it.type] },
-                    urlProvider = { login, settings -> "http://localhost/" }
+                    urlProvider = { login, settings ->
+                        "http://localhost/login"
+                    }
             )
+        }
+
+        param("error") {
+            handle {
+                call.respondRedirect("login_failed.html")
+            }
         }
 
         handle {

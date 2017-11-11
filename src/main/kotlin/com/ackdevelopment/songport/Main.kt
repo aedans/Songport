@@ -16,7 +16,7 @@ fun Application.module() {
     install(Routing) {
         login()
         index()
-//        website()
+        website()
     }
 }
 
