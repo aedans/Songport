@@ -14,8 +14,9 @@ const val WEBSITE = "./website"
 fun Application.module() {
     install(Locations)
     install(Routing) {
+        login()
         index()
-        website()
+//        website()
     }
 }
 

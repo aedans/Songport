@@ -33,6 +33,7 @@ dependencies {
     compile "org.jetbrains.ktor:ktor-core:$ktor_version"
     compile "org.jetbrains.ktor:ktor-locations:$ktor_version"
     compile "org.jetbrains.ktor:ktor-netty:$ktor_version"
+    compile "org.jetbrains.ktor:ktor-html-builder:$ktor_version"
 }
 
 mainClassName = "com.ackdevelopment.songport.Main"
