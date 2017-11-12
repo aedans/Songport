@@ -19,5 +19,3 @@ fun externalIp() =
                 .component1()?.ip ?: throw Exception("unable to get external ip")
 
 val songport_url = externalIp()
-
-val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4)!!
