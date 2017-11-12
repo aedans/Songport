@@ -5,6 +5,7 @@ import kotlinx.html.link
 
 fun HEAD.links() {
     link(rel = "stylesheet", type = "text/css", href = "/styles/normalize.css") {
+
     }
 
     link(rel = "stylesheet", type = "text/css", href = "/styles/skeleton.css") {

@@ -16,8 +16,6 @@ import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.sessions.Sessions
 import org.jetbrains.ktor.sessions.cookie
 
-const val WEBSITE = "./website"
-
 data class SongportSession(val userId: String)
 
 fun Application.install() {
@@ -30,6 +28,7 @@ fun Application.install() {
         }
     }
     install(Routing) {
+        styles()
         index()
         register()
         login()
@@ -38,7 +37,6 @@ fun Application.install() {
         userEdit()
         users()
         playlists()
-        website()
         services()
     }
 }
