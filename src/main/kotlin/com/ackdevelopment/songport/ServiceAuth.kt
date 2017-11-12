@@ -22,14 +22,12 @@ typealias LoginHandler = (ClientID) -> AuthRedirectURL
 val clientID = "spotify-clientId.secret".readText()
 val clientSecret = "spotify-client-secret.secret".readText()
 
-val serviceLoginHandlers = mapOf<String, LoginHandler>(
-        "spotify" to { _ ->
-            SpotifyService.getAuthenticationURL(
-                    clientID,
-                    clientSecret,
-                    "http://$songportURL/services/spotify/auth")
-        }
-)
+val apiMap = mapOf<String, SpotifyApi>()
+
+fun spotifyHandler() = SpotifyService.getAuthenticationURL(
+                        clientID,
+                        clientSecret,
+                        "http://$songportURL/services/spotify/auth")
 
 fun Routing.services() {
     get<ServiceAuth> {
@@ -42,22 +40,11 @@ fun Routing.services() {
             println("Storing the code in the database")
             getUser(username)?.copy(spotifyAuthCode = it)?.let { database.getCollection("users").updateOneById(it._id, it) }
                 ?: throw Exception("user $username does not exist")
-
-            /*
-            val api = SpotifyApi.builder()
-                    .clientSecret(clientSecret)
-                    .clientId(clientID)
-                    .build()
-            val service = SpotifyService.privilegedInstance(api, username)
-            service.native.mySavedTracks.build().get().items.forEach { println(it) }
-            */
             call.respondRedirect("/user/edit")
         } ?: run {
-            serviceLoginHandlers[service]?.invoke(username)?.let {
-                call.respondRedirect(it)
-            } ?: run {
-                call.response.status(HttpStatusCode.NotFound)
-                call.respondRedirect("/service_failure.html")
+            when(service){
+                "spotify" -> call.respondRedirect(spotifyHandler().second)
+                else -> throw Exception("unknown service $service")
             }
         }
     }

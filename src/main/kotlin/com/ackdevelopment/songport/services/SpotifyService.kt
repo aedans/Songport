@@ -1,5 +1,6 @@
 package com.ackdevelopment.songport.services
 
+import com.ackdevelopment.songport.apiMap
 import com.ackdevelopment.songport.database
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.*;
@@ -56,6 +57,8 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
         }
     }
 
+    val apiMap = mapOf<String, SpotifyApi>()
+
     override fun removeSong(name: String) {
         api.mySavedTracks.build().get().items.find { it.track.name == name }?.let {
             api.removeFromMySavedTracks(listOf(it.track.id))
@@ -63,7 +66,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
     }
 
     companion object {
-        fun getAuthenticationURL(clientId: String, clientSecret: String, redirect: String): String {
+        fun getAuthenticationURL(clientId: String, clientSecret: String, redirect: String): Pair<SpotifyApi, String> {
             val api = SpotifyApi.builder()
                     .clientId(clientId)
                     .clientSecret(clientSecret)
@@ -84,10 +87,11 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
             /* prevent cross site forgeries with a state string */
             val state = UUID.randomUUID().toString()
             /* TODO use this to authenticate */
-            return api.createAuthorizeURL(scopes, state)
+            return api to api.createAuthorizeURL(scopes, state)
         }
 
-        fun privilegedInstance(api: SpotifyApi, name: String): SpotifyService {
+        fun privilegedInstance(name: String): SpotifyService {
+            val api = apiMap[name] ?: throw Exception("no api")
             getUser(name)?.spotifyAuthCode?.let {
                 println("CODE: $it")
                 val refresh = api.authorizationCodeGrant(it).build().get()
