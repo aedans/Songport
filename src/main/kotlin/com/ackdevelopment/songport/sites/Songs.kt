@@ -39,5 +39,5 @@ fun getSongHtml(song: Song) = songportHtml(song.title) {
     br
     +"Time: ${song.seconds / 60}:${song.seconds % 60}"
     br
-    +"Services: ${song.services.joinToString(prefix = "", postfix = "")}"
+    +"Services: ${song.services.joinToString(prefix = "", postfix = "").map { it.toString().capitalize() }}"
 }
