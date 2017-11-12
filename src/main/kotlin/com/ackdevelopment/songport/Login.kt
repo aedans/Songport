@@ -1,5 +1,6 @@
 package com.ackdevelopment.songport
 
+import com.mongodb.client.MongoDatabase
 import kotlinx.html.*
 import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.auth.OAuthAccessTokenResponse
@@ -11,11 +12,15 @@ import org.jetbrains.ktor.locations.oauthAtLocation
 import org.jetbrains.ktor.response.respondRedirect
 import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.routing.param
+import org.jetbrains.ktor.sessions.sessions
+import org.jetbrains.ktor.sessions.set
 
 @location("/login/{type?}")
 class Login(val type: String = "")
 
-fun Routing.login() {
+data class SongportSession(val userId: String)
+
+fun Routing.login(db: MongoDatabase) {
     location<Login> {
         authentication {
             oauthAtLocation<Login>(
@@ -33,9 +38,12 @@ fun Routing.login() {
         }
 
         handle {
-            val principal = call.authentication.principal<OAuthAccessTokenResponse>()
+            val principal = call.authentication.principal<OAuthAccessTokenResponse.OAuth2>()
             if (principal != null) {
-                call.loggedInSuccessResponse(principal)
+                val userId = principal.accessToken
+                call.sessions.set(SongportSession(userId))
+
+                call.loggedInSuccessResponse(principal.accessToken)
             } else {
                 call.loginPage()
             }
@@ -67,7 +75,7 @@ private suspend fun ApplicationCall.loginPage() {
     }
 }
 
-private suspend fun ApplicationCall.loggedInSuccessResponse(callback: OAuthAccessTokenResponse) {
+private suspend fun ApplicationCall.loggedInSuccessResponse(token: String) {
     respondHtml {
         head {
             title { +"Logged in" }
@@ -79,7 +87,7 @@ private suspend fun ApplicationCall.loggedInSuccessResponse(callback: OAuthAcces
             }
 
             p {
-                +"Your token is $callback"
+                +"Your token is $token"
             }
         }
     }

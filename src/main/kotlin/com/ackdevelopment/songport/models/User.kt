@@ -2,4 +2,4 @@ package com.ackdevelopment.songport.models
 
 import java.io.Serializable
 
-data class User(val name: String, val token: String): Serializable
+data class User(val _id: String, val name: String): Serializable
