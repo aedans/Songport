@@ -69,20 +69,3 @@ compileTestKotlin {
         jvmTarget = "1.8"
     }
 }
-
-task fatJar(type: Jar) {
-    archiveName = "songport.jar"
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
-    manifest {
-        attributes 'Main-Class': mainClassName
-    }
-}
-
-task copyJar(type: Copy) {
-    from fatJar
-    into 'install'
-}
-
-build.dependsOn fatJar
-build.dependsOn copyJar
