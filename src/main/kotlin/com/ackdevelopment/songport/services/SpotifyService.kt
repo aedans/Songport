@@ -106,10 +106,12 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
                 )
             }
             mySavedSongs.forEach { putSong(it) }
-            putPlaylist(Playlist(
+            val playlist = Playlist(
                     "My Saved Tracks",
                     mySavedSongs.map { it._id }
-            ))
+            )
+            putPlaylist(playlist)
+            putUser(getUser(name)!!.let { it.copy(playlistIds = it.playlistIds + playlist._id) })
             return SpotifyService(name, api)
         }
     }
