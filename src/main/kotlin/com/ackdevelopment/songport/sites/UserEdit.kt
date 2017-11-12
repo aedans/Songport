@@ -5,7 +5,6 @@ import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.getUsernameAndPassword
 import com.ackdevelopment.songport.models.User
 import kotlinx.html.*
-import kotlinx.html.stream.createHTML
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
@@ -37,29 +36,22 @@ fun Routing.userEdit() {
     }
 }
 
-fun getUserEditHtml(user: User) = createHTML().html {
-    head {
-        title(user.title.capitalize())
-        links()
+fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
+    h1 {
+        +"Edit ${user.title.capitalize()}"
     }
 
-    body {
-        h1 {
-            +"Edit ${user.title.capitalize()}"
-        }
-
-        user.spotifyAuthCode?.apply {
-            +"Songs imported from spotify"
-        } ?: run {
-            +"Import from Spotify"
-            br
-            form {
-                action = "/services/spotify/auth"
-                method = FormMethod.get
-                input {
-                    type = InputType.submit
-                    style = "background-color: #6AE368; color: black"
-                }
+    user.spotifyAuthCode?.apply {
+        +"Songs imported from spotify"
+    } ?: run {
+        +"Import from Spotify"
+        br
+        form {
+            action = "/services/spotify/auth"
+            method = FormMethod.get
+            input {
+                type = InputType.submit
+                style = "background-color: #6AE368; color: black"
             }
         }
     }
