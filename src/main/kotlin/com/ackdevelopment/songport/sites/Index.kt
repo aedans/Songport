@@ -19,15 +19,6 @@ fun getIndexHtml() = songportHtml("Songport") {
 
         }
         */
-        h1 {
-            +"songport"
-        }
-        br
-        h4 {
-            +"music for the masses"
-        }
-
-        br
 
         a(classes = "button", href = "/register.html") {
             +"register"
