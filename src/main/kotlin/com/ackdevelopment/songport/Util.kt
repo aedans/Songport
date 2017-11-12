@@ -10,5 +10,3 @@ suspend fun async(fn: suspend () -> Unit) = kotlinx.coroutines.experimental.run(
 val songport_url = "127.0.0.1"
 
 fun String.readText() = File(this).readText()
-
-val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4)!!
