@@ -3,14 +3,14 @@ package com.ackdevelopment.songport.sites
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
 
-fun songportHtml(title: String) = createHTML().html {
+fun songportHtml(title: String, body: BODY.() -> Unit) = createHTML().html {
     head {
         this.title(title)
         links()
     }
 
     body {
-
+        body()
     }
 }
 

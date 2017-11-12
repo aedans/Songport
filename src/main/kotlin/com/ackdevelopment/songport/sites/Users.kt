@@ -2,8 +2,7 @@ package com.ackdevelopment.songport.sites
 
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.User
-import kotlinx.html.*
-import kotlinx.html.stream.createHTML
+import kotlinx.html.h1
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
@@ -24,15 +23,8 @@ fun Routing.users() {
     }
 }
 
-fun getUserHtml(user: User) = createHTML().html {
-    head {
-        title(user.title.capitalize())
-        links()
-    }
-
-    body {
-        h1 {
-            +user.title.capitalize()
-        }
+fun getUserHtml(user: User) = songportHtml(user.title.capitalize()) {
+    h1 {
+        +user.title.capitalize()
     }
 }

@@ -1,7 +1,7 @@
 package com.ackdevelopment.songport.sites
 
-import kotlinx.html.*
-import kotlinx.html.stream.createHTML
+import kotlinx.html.a
+import kotlinx.html.br
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
@@ -17,21 +17,14 @@ fun Routing.index() {
     }
 }
 
-fun getIndexHtml() = createHTML().html {
-    head {
-        title("Songport")
-        links()
+fun getIndexHtml() = songportHtml("Songport") {
+    a(href = "/register.html") {
+        +"register"
     }
 
-    body {
-        a(href = "/register.html") {
-            +"register"
-        }
+    br
 
-        br
-
-        a(href = "/login.html") {
-            +"login"
-        }
+    a(href = "/login.html") {
+        +"login"
     }
 }

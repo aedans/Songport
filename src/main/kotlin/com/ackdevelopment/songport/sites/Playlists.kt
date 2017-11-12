@@ -2,8 +2,7 @@ package com.ackdevelopment.songport.sites
 
 import com.ackdevelopment.songport.getPlaylist
 import com.ackdevelopment.songport.models.Playlist
-import kotlinx.html.*
-import kotlinx.html.stream.createHTML
+import kotlinx.html.h1
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
@@ -24,15 +23,8 @@ fun Routing.playlists() {
     }
 }
 
-fun getPlaylistHtml(playlist: Playlist) = createHTML().html {
-    head {
-        title(playlist.title.capitalize())
-        links()
-    }
-
-    body {
-        h1 {
-            +playlist.title.capitalize()
-        }
+fun getPlaylistHtml(playlist: Playlist) = songportHtml(playlist.title) {
+    h1 {
+        +playlist.title.capitalize()
     }
 }
