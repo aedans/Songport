@@ -10,6 +10,6 @@ val songportURL = "198.199.116.233"
 
 val digest = { it: String ->
     encodeBase64(getDigestFunction("MD5", "")(it)).asSequence().joinToString(prefix = "", postfix = "", separator = "") {
-        if (it.isLetterOrDigit()) "$it" else "%${it.toInt()}"
+        if (it in 'a'..'z' || it in 'A'..'Z' || it in '0'..'9') "$it" else "%${it.toInt()}"
     }
 }
