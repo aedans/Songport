@@ -1,5 +1,6 @@
 package com.ackdevelopment.songport.users
 
+import com.ackdevelopment.songport.digest
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.putUser
 import org.jetbrains.ktor.locations.location
