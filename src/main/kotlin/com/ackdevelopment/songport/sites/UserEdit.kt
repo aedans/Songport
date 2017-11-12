@@ -5,6 +5,7 @@ import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.getUsernameAndPassword
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.models.title
+import com.ackdevelopment.songport.services.SpotifyService
 import kotlinx.html.*
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
@@ -44,6 +45,9 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
 
     user.spotifyAuthCode?.apply {
         +"Songs imported from spotify"
+        SpotifyService.privilegedInstance(user.title)
+                .native.newReleases.build().get()
+                .albums.items?.forEach { +it.name }
     } ?: run {
         +"Import from Spotify"
         br

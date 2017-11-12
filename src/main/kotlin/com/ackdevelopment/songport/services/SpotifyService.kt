@@ -88,7 +88,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
         }
 
         fun privilegedInstance(name: String): SpotifyService {
-            val api = Api.DEFAULT_API
+            val api = Api.builder().build()
             getUser(name)?.spotifyAuthCode?.let {
                 val refresh = api.authorizationCodeGrant(it).build().get()
                     ?: throw Exception("unable to get refresh code")
