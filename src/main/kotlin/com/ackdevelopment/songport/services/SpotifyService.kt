@@ -4,6 +4,7 @@ import com.ackdevelopment.songport.apiMap
 import com.ackdevelopment.songport.database
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.*;
+import com.ackdevelopment.songport.putSong
 import com.wrapper.spotify.Api
 import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.response.respondRedirect
@@ -96,6 +97,14 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
                 val refresh = authorizationCodeGrant(authCode).build().get()
                 setAccessToken(refresh.accessToken)
                 setRefreshToken(refresh.refreshToken)
+            }
+            api.mySavedTracks.build().get().items.forEach {
+                putSong(Song(
+                        it.track.name,
+                        it.track.album.name,
+                        it.track.artists.first().name,
+                        it.track.duration.toLong(),
+                        listOf("spotify")))
             }
             return SpotifyService(name, api)
         }
