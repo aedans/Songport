@@ -17,8 +17,7 @@ fun Routing.user() {
         if (session == null) {
             call.respondRedirect("/login.html")
         } else {
-            val (username, _) = session.userId.split(':')
-            call.respondRedirect("/users/$username")
+            call.respondRedirect("/user/edit")
         }
     }
 }
