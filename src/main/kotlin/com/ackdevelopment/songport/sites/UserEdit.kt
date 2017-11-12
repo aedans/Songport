@@ -12,6 +12,7 @@ import org.jetbrains.ktor.response.respondText
 import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.sessions.get
 import org.jetbrains.ktor.sessions.sessions
+import java.awt.im.spi.InputMethod
 
 @location("/user/edit")
 class UserEdit
@@ -36,6 +37,17 @@ fun getUserEditHtml(user: User) = createHTML().html {
     body {
         h1 {
             +"Edit ${user.title.capitalize()}"
+        }
+
+        +"Import from Spotify"
+        br
+        form {
+            action = "services/spotify/auth"
+            method = FormMethod.get
+            input {
+                type = InputType.submit
+                style = "background-color: #6AE368; color: black"
+            }
         }
     }
 }

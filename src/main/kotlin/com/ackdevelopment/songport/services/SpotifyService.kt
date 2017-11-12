@@ -78,16 +78,12 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
             /* prevent cross site forgeries with a state string */
             val state = UUID.randomUUID().toString()
             /* TODO use this to authenticate */
-            return api.createAuthorizeURL(scopes, state).let {
-                println("URL: $it");
-                it
-            }
+            return api.createAuthorizeURL(scopes, state)
         }
 
-        /* TODO
+        /*
         fun authorizedInstance(authCode: String): SpotifyService {
-            //val title = api.me.build().get().id
-            //return SpotifyService(title, api)
+            return SpotifyService(title, api)
         }
         */
     }
