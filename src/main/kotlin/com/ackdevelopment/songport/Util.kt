@@ -8,4 +8,4 @@ suspend fun async(fn: suspend () -> Unit) = kotlinx.coroutines.experimental.run(
 
 fun String.readText() = File(this).readText()
 
-val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4)
+val exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() * 4)!!

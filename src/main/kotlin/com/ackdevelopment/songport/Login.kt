@@ -1,12 +1,8 @@
 package com.ackdevelopment.songport
 
-import com.mongodb.client.MongoDatabase
-import kotlinx.html.*
-import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.auth.OAuthAccessTokenResponse
 import org.jetbrains.ktor.auth.authentication
 import org.jetbrains.ktor.client.DefaultHttpClient
-import org.jetbrains.ktor.html.respondHtml
 import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.oauthAtLocation
 import org.jetbrains.ktor.response.respondRedirect
@@ -20,7 +16,7 @@ class Login(val type: String = "")
 
 data class SongportSession(val userId: String)
 
-fun Routing.login(db: MongoDatabase) {
+fun Routing.login() {
     location<Login> {
         authentication {
             oauthAtLocation<Login>(
