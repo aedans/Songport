@@ -58,7 +58,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
     }
 
     companion object {
-        suspend fun getAuthenticationURL(clientId: String, clientSecret: String, redirect: String): String {
+        fun getAuthenticationURL(clientId: String, clientSecret: String, redirect: String): String {
             val api = SpotifyApi.builder()
                     .clientId(clientId)
                     .clientSecret(clientSecret)

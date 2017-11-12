@@ -1,5 +1,6 @@
 package com.ackdevelopment.songport
 
+import com.ackdevelopment.songport.services.SpotifyService
 import org.jetbrains.ktor.http.HttpStatusCode
 import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.get
@@ -17,14 +18,19 @@ typealias ClientID = String
 typealias LoginHandler = (ClientID) -> AuthRedirectURL
 
 val serviceLoginHandlers = mapOf<String, LoginHandler>(
-        /* TODO actually add authenticator */
-        "spotify" to { _ -> "/service_failure.html" }
+        "spotify" to { _ ->
+            SpotifyService.getAuthenticationURL(
+                    "spotify-clientId.secret".readText(),
+                    "spotify-client-secret.secret".readText(),
+                    "$songport_url/service/spotify/auth")
+        }
 )
 
 fun Routing.services() {
     get<ServiceAuth> {
         val service = it.type
         val session = call.sessions.get<SongportSession>()!!
+        /* TODO check if this is a redirect */
         println("service being used: $service")
         serviceLoginHandlers[service]?.invoke(session.userId)?.let {
             call.respondRedirect(it)
