@@ -7,6 +7,6 @@ data class User(
         val password: String,
         val playlistIds: List<String>,
         val spotifyAuthCode: String?
-): Serializable {
-    val title get() = _id
-}
+): Serializable
+
+val User.title get() = _id
