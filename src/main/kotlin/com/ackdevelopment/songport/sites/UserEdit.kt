@@ -46,7 +46,7 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
 
         user.spotifyAuthCode?.apply {
             +"Songs imported from spotify"
-                apiMap[user._id]?.let {
+                apiMap[user.title]?.let {
                     it.newReleases.build().get()
                         .albums.items?.forEach { +it.name }
                 } ?: +"ohno"
