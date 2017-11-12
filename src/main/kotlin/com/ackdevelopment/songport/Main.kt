@@ -28,6 +28,7 @@ fun Application.install() {
     }
     install(Routing) {
         index()
+        register()
         login()
         users()
         website()

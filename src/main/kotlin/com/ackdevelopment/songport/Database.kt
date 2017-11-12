@@ -16,8 +16,6 @@ fun getUser(id: String) = getUsers().findOneById(id)
 
 fun putUser(user: User) = getUsers().insertOne(user)
 
-fun putUserIfMissing(user: User) = getUser(user._id) ?: putUser(user)
-
 fun getPlaylists() = database.getCollection<Playlist>("playlists")
 
 fun getPlaylist(id: String) = getPlaylists().findOneById(id)

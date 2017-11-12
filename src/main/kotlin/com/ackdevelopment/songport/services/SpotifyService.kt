@@ -83,8 +83,8 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
 
         /* TODO
         fun authorizedInstance(authCode: String): SpotifyService {
-            //val userId = api.me.build().get().id
-            //return SpotifyService(userId, api)
+            //val name = api.me.build().get().id
+            //return SpotifyService(name, api)
         }
         */
     }
