@@ -22,7 +22,7 @@ val serviceLoginHandlers = mapOf<String, LoginHandler>(
             SpotifyService.getAuthenticationURL(
                     "spotify-clientId.secret".readText(),
                     "spotify-client-secret.secret".readText(),
-                    "http://$songportURL")
+                    "http://$songportURL/services/spotify/auth")
         }
 )
 
@@ -30,13 +30,16 @@ fun Routing.services() {
     get<ServiceAuth> {
         val service = it.type
         val session = call.sessions.get<SongportSession>()!!
-        /* TODO check if this is a redirect */
-        println("service being used: $service")
-        serviceLoginHandlers[service]?.invoke(session.userId)?.let {
-            call.respondRedirect(it)
+        call.request.queryParameters["code"]?.let {
+            /* this is after the redirect back from authentication */
+            println("The user's code is $it")
         } ?: run {
-            call.response.status(HttpStatusCode.NotFound)
-            call.respondRedirect("/service_failure.html")
+            serviceLoginHandlers[service]?.invoke(session.userId)?.let {
+                call.respondRedirect(it)
+            } ?: run {
+                call.response.status(HttpStatusCode.NotFound)
+                call.respondRedirect("/service_failure.html")
+            }
         }
     }
 }
