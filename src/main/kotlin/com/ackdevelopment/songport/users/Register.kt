@@ -22,9 +22,11 @@ fun Routing.register() {
         val username = registration["username"]!!
         val password = registration["password"]!!
 
-        putUser(User(username, digest(password), emptyList()))
+        val passwordDigest = digest(password)
 
-        call.sessions.set(SongportSession(password))
+        putUser(User(username, passwordDigest, emptyList()))
+
+        call.sessions.set(SongportSession(username + ":" + passwordDigest))
 
         call.respondRedirect("/user")
     }
