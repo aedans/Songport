@@ -9,11 +9,11 @@ suspend fun async(fn: suspend () -> Unit) = kotlinx.coroutines.experimental.run(
 
 fun String.readText() = File(this).readText()
 
-data class IpifiyResult(val ip: String? = null)
+data class IpifyResult(val ip: String? = null)
 
 fun externalIp() =
         "https://api.ipify.org?format=json".httpGet()
-                .responseObject<IpifiyResult>(jacksonDeserializerOf())
+                .responseObject<IpifyResult>(jacksonDeserializerOf())
                 .third
                 .component1()?.ip ?: throw Exception("unable to get external ip")
 
