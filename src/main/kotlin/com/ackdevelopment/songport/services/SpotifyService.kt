@@ -5,6 +5,7 @@ import com.ackdevelopment.songport.models.*;
 import com.wrapper.spotify.Api
 import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.response.respondRedirect
+import org.litote.kmongo.updateOneById
 import java.util.*
 
 typealias SpotifyApi = com.wrapper.spotify.Api
@@ -111,7 +112,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
                     mySavedSongs.map { it._id }
             )
             putPlaylistIfMissing(playlist)
-            putUser(getUser(name)!!.let { it.copy(playlistIds = it.playlistIds + playlist._id) })
+            getUsers().updateOneById(name, getUser(name)!!.let { it.copy(playlistIds = it.playlistIds + playlist._id) })
             return SpotifyService(name, api)
         }
     }
