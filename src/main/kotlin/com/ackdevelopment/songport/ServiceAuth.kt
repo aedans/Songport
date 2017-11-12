@@ -41,6 +41,9 @@ fun Routing.services() {
             getUser(username)?.copy(spotifyAuthCode = it)?.let { database.getCollection("users").updateOneById(it._id, it) }
                 ?: throw Exception("user $username does not exist")
             SpotifyService.privilegedInstance(username)
+            apiMap[username]!!.mySavedTracks.build().get().items.forEach {
+                println(it)
+            }
             call.respondRedirect("/user/edit")
         } ?: run {
             when(service){
