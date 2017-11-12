@@ -9,7 +9,7 @@ import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.sessions.get
 import org.jetbrains.ktor.sessions.sessions
 
-@location("/service/{type}/auth")
+@location("/services/{type}/auth")
 data class ServiceAuth(val type: String)
 
 typealias AuthRedirectURL = String
