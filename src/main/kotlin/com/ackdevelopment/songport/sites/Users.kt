@@ -33,6 +33,8 @@ fun getUserHtml(user: User) = songportHtml(user.title.capitalize()) {
         style = "text-align: center"
         +user.title.capitalize()
 
+        br
+
         user.playlistIds.forEach {
             val playlist = getPlaylist(it)!!
             a(href = "/playlists/$it") {
