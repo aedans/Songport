@@ -8,6 +8,7 @@ import org.jetbrains.ktor.response.respondRedirect
 import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.sessions.get
 import org.jetbrains.ktor.sessions.sessions
+import org.litote.kmongo.updateOneById
 
 @location("/services/{type}/auth")
 data class ServiceAuth(val type: String)
@@ -35,7 +36,7 @@ fun Routing.services() {
             /* this is after the redirect back from authentication */
             println("The user's code is $it")
             println("Storing the code in the database")
-            getUser(username)?.copy(spotifyAuthCode = it)?.let { putUser(it) }
+            getUser(username)?.copy(spotifyAuthCode = it)?.let { database.getCollection("users").updateOneById(it._id, it) }
                 ?: throw Exception("user $username does not exist")
             call.respondRedirect("/user/edit")
         } ?: run {
