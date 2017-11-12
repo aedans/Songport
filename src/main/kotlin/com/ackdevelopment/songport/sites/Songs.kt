@@ -23,9 +23,7 @@ fun Routing.songs() {
 fun getSongHtml(song: Song) = createHTML().html {
     head {
         title(song.title.capitalize())
-        link(rel = "stylesheet", type = "text/css", href = "styles/songport.css") {
-
-        }
+        links()
     }
 
     body {

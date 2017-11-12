@@ -23,9 +23,7 @@ fun Routing.users() {
 fun getUserHtml(user: User) = createHTML().html {
     head {
         title(user.title.capitalize())
-        link(rel = "stylesheet", type = "text/css", href = "styles/songport.css") {
-
-        }
+        links()
     }
 
     body {

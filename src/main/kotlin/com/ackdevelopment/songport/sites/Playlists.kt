@@ -23,9 +23,7 @@ fun Routing.playlists() {
 fun getPlaylistHtml(playlist: Playlist) = createHTML().html {
     head {
         title(playlist.title.capitalize())
-        link(rel = "stylesheet", type = "text/css", href = "styles/songport.css") {
-
-        }
+        links()
     }
 
     body {
