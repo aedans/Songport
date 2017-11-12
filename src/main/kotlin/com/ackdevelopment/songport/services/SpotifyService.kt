@@ -99,7 +99,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
             val mySavedTracks = api.mySavedTracks.build().get().items
             val mySavedSongs = mySavedTracks.map {
                 Song(
-                        it.track.name + "8",
+                        it.track.name,
                         it.track.album.name,
                         it.track.artists.first().name,
                         it.track.duration.toLong() / 1000,
