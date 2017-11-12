@@ -91,15 +91,12 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
         }
 
         fun privilegedInstance(name: String): SpotifyService {
-            val api = apiMap[name] ?: throw Exception("no api")
-            getUser(name)?.spotifyAuthCode?.let {
-                println("CODE: $it")
-                val refresh = api.authorizationCodeGrant(it).build().get()
-                    ?: throw Exception("unable to get refresh code")
-                api.setAccessToken(refresh.accessToken)
-                api.setRefreshToken(refresh.refreshToken)
-            } ?: throw Exception("$name is an unauthenticated user")
-            apiMap[name] = api
+            val authCode = getUser(name)!!.spotifyAuthCode
+            val api = apiMap[name]!!.apply {
+                val refresh = authorizationCodeGrant(authCode).build().get()
+                setAccessToken(refresh.accessToken)
+                setRefreshToken(refresh.refreshToken)
+            }
             return SpotifyService(name, api)
         }
     }
