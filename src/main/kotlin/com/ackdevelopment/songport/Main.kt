@@ -31,6 +31,7 @@ fun Application.install() {
         login()
         users()
         website()
+        services()
     }
 }
 
