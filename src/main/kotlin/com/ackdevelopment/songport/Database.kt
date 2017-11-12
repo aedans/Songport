@@ -22,8 +22,12 @@ fun getPlaylist(id: String) = getPlaylists().findOneById(id)
 
 fun putPlaylist(playlist: Playlist) = getPlaylists().insertOne(playlist)
 
+fun putPlaylistIfMissing(playlist: Playlist) = getPlaylist(playlist._id) ?: putPlaylist(playlist)
+
 fun getSongs() = database.getCollection<Song>("songs")
 
 fun getSong(id: String) = getSongs().findOneById(id)
 
 fun putSong(song: Song) = getSongs().insertOne(song)
+
+fun putSongIfMissing(song: Song) = getSong(song._id) ?: putSong(song)
