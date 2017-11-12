@@ -103,7 +103,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
                         it.track.name,
                         it.track.album.name,
                         it.track.artists.first().name,
-                        it.track.duration.toLong(),
+                        it.track.duration.toLong()/1000,
                         listOf("spotify")))
             }
             return SpotifyService(name, api)
