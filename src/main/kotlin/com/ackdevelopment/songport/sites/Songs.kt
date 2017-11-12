@@ -2,6 +2,7 @@ package com.ackdevelopment.songport.sites
 
 import com.ackdevelopment.songport.getSong
 import com.ackdevelopment.songport.models.Song
+import kotlinx.html.br
 import kotlinx.html.h1
 import kotlinx.html.style
 import org.jetbrains.ktor.http.ContentType
@@ -29,4 +30,11 @@ fun getSongHtml(song: Song) = songportHtml(song.title) {
         style = "text-align: center"
         +song.title.capitalize()
     }
+
+    br
+
+    +"Artist: ${song.artist}"
+    +"Album: ${song.album}"
+    +"Time: ${song.seconds} sec"
+    +"Services: ${song.services.joinToString(prefix = "", postfix = "")}"
 }

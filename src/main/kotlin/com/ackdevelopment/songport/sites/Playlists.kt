@@ -32,6 +32,8 @@ fun getPlaylistHtml(playlist: Playlist) = songportHtml(playlist.title) {
         style = "text-align: center"
         +playlist.title.capitalize()
 
+        br
+
         playlist.songIds.forEach {
             val song = getSong(it)!!
             a(href = "/songs/$it") {
