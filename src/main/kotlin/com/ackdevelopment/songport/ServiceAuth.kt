@@ -38,6 +38,8 @@ fun Routing.services() {
             println("Storing the code in the database")
             getUser(username)?.copy(spotifyAuthCode = it)?.let { database.getCollection("users").updateOneById(it._id, it) }
                 ?: throw Exception("user $username does not exist")
+            val api = SpotifyService.privilegedInstance(username)
+            api.native.mySavedTracks.build().get().items.forEach { println(it) }
             call.respondRedirect("/user/edit")
         } ?: run {
             serviceLoginHandlers[service]?.invoke(username)?.let {

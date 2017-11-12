@@ -1,6 +1,9 @@
 package com.ackdevelopment.songport.services
 
+import com.ackdevelopment.songport.database
+import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.*;
+import com.wrapper.spotify.Api
 import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.response.respondRedirect
 import java.util.*
@@ -8,6 +11,8 @@ import java.util.*
 typealias SpotifyApi = com.wrapper.spotify.Api
 
 class SpotifyService(private val userID: String, private val api: SpotifyApi): Service {
+
+    val native get() = api
 
     private fun SpotifyApi.findPlaylist(name: String) =
             api.getPlaylistsForUser(userID).build().get().items.find { it.name == name }
@@ -64,6 +69,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
                     .clientSecret(clientSecret)
                     .redirectURI(redirect)
                     .build()
+
             /* do user authentication */
             val scopes = listOf(
                     "playlist-read-private",
@@ -81,10 +87,14 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
             return api.createAuthorizeURL(scopes, state)
         }
 
-        /*
-        fun authorizedInstance(authCode: String): SpotifyService {
-            return SpotifyService(title, api)
+        fun privilegedInstance(name: String): SpotifyService {
+            val api = Api.DEFAULT_API
+            getUser(name)?.spotifyAuthCode?.let {
+                val refresh = api.authorizationCodeGrant(it).build().get()!!
+                api.setAccessToken(refresh.accessToken)
+                api.setRefreshToken(refresh.refreshToken)
+            } ?: throw Exception("$name is an unauthenticated user")
+            return SpotifyService(name, api)
         }
-        */
     }
 }
