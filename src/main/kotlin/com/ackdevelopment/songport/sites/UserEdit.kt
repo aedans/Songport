@@ -44,9 +44,10 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
         @Suppress("NAME_SHADOWING")
         val user = getUser(user.title)!!
         user.spotifyAuthCode?.let {
-            getPlaylists().find().forEach {
-                a(href = "/playlists/${it._id}") {
-                    +it.title
+            user.playlistIds.forEach {
+                val playlist = getPlaylist(it)!!
+                a(href = "/playlists/$it") {
+                    +playlist.title
                 }
             }
         } ?: run {
