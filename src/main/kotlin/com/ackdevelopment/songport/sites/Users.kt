@@ -3,7 +3,9 @@ package com.ackdevelopment.songport.sites
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.models.title
+import kotlinx.html.div
 import kotlinx.html.h1
+import kotlinx.html.style
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
@@ -26,6 +28,7 @@ fun Routing.users() {
 
 fun getUserHtml(user: User) = songportHtml(user.title.capitalize()) {
     h1 {
+        style = "text-align: center"
         +user.title.capitalize()
     }
 }
