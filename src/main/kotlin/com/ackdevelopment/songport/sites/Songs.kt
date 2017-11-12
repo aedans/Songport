@@ -1,9 +1,9 @@
 package com.ackdevelopment.songport.sites
 
-import com.ackdevelopment.songport.TEMPLATES
 import com.ackdevelopment.songport.getSong
 import com.ackdevelopment.songport.models.Song
-import com.ackdevelopment.songport.readText
+import kotlinx.html.*
+import kotlinx.html.stream.createHTML
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
@@ -20,5 +20,17 @@ fun Routing.songs() {
     }
 }
 
-fun getSongHtml(song: Song) = "$TEMPLATES/song.html".readText()
-        .replace("%SONG_TITLE%", song.title)
+fun getSongHtml(song: Song) = createHTML().html {
+    head {
+        title(song.title.capitalize())
+        link(rel = "stylesheet", type = "text/css", href = "styles/songport.css") {
+
+        }
+    }
+
+    body {
+        h1 {
+            +song.title.capitalize()
+        }
+    }
+}

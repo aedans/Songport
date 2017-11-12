@@ -17,7 +17,6 @@ import org.jetbrains.ktor.sessions.Sessions
 import org.jetbrains.ktor.sessions.cookie
 
 const val WEBSITE = "./website"
-const val TEMPLATES = "./templates"
 
 data class SongportSession(val userId: String)
 
