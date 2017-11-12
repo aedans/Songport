@@ -47,28 +47,30 @@ fun Routing.login() {
 }
 
 fun getLoginHtml(err: String?) = songportHtml("Login") {
-    form(action = "/login", method = FormMethod.post) {
-        if (err != null) {
-            p {
-                style = "color: red"
-                +err
+    div(classes = "centered") {
+        form(action = "/login", method = FormMethod.post) {
+            if (err != null) {
+                p {
+                    style = "color: red"
+                    +err
+                }
             }
-        }
 
-        +"Username:"
-        br
-        input(type = InputType.text, name = "username") {
+            +"Username:"
+            br
+            input(type = InputType.text, name = "username") {
 
-        }
-        br
-        +"Password:"
-        br
-        input(type = InputType.password, name = "password") {
+            }
+            br
+            +"Password:"
+            br
+            input(type = InputType.password, name = "password") {
 
-        }
+            }
+            br
+            input(type = InputType.submit, name = "submit") {
 
-        input(type = InputType.submit, name = "submit") {
-
+            }
         }
     }
 }

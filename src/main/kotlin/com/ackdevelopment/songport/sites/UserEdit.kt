@@ -39,24 +39,26 @@ fun Routing.userEdit() {
 }
 
 fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
-    h1 {
-        +"Edit ${user.title.capitalize()}"
-    }
+    div(classes = "centered") {
+        h1 {
+            +"Edit ${user.title.capitalize()}"
+        }
 
-    user.spotifyAuthCode?.apply {
-        +"Songs imported from spotify"
-        SpotifyService.privilegedInstance(user.title)
-                .native.newReleases.build().get()
-                .albums.items?.forEach { +it.name }
-    } ?: run {
-        +"Import from Spotify"
-        br
-        form {
-            action = "/services/spotify/auth"
-            method = FormMethod.get
-            input {
-                type = InputType.submit
-                style = "background-color: #6AE368; color: black"
+        user.spotifyAuthCode?.apply {
+            +"Songs imported from spotify"
+            SpotifyService.privilegedInstance(user.title)
+                    .native.newReleases.build().get()
+                    .albums.items?.forEach { +it.name }
+        } ?: run {
+            +"Import from Spotify"
+            br
+            form {
+                action = "/services/spotify/auth"
+                method = FormMethod.get
+                input {
+                    type = InputType.submit
+                    style = "background-color: #6AE368; color: black"
+                }
             }
         }
     }

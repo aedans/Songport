@@ -9,7 +9,7 @@ import org.jetbrains.ktor.routing.Routing
 
 val STYLES = "styles"
 
-@location("styles/{name}")
+@location("/styles/{name}")
 class Styles(val name: String)
 
 fun Routing.styles() {

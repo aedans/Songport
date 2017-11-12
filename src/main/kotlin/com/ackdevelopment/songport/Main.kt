@@ -32,6 +32,7 @@ fun Application.install() {
         }
     }
     install(Routing) {
+        imgs()
         styles()
         index()
         register()
