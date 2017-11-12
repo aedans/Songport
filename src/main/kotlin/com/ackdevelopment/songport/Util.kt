@@ -11,14 +11,6 @@ suspend fun async(fn: suspend () -> Unit) = kotlinx.coroutines.experimental.run(
 
 fun String.readText() = File(this).readText()
 
-data class IpifyResult(val ip: String? = null)
-
-fun externalIp() =
-        "https://api.ipify.org?format=json".httpGet()
-                .responseObject<IpifyResult>(jacksonDeserializerOf())
-                .third
-                .component1()?.ip ?: throw Exception("unable to get external ip")
-
-val songportURL = externalIp()
+val songportURL = "198.199.116.233"
 
 val digest = { it: String -> getDigestFunction("MD5", "")(it).toString(Charset.defaultCharset()) }
