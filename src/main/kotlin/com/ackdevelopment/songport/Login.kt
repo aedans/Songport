@@ -33,7 +33,7 @@ fun Routing.login(db: MongoDatabase) {
 
         param("error") {
             handle {
-                call.respondRedirect("login_failed.html")
+                call.respondRedirect("/login_failed.html")
             }
         }
 
@@ -43,51 +43,9 @@ fun Routing.login(db: MongoDatabase) {
                 val userId = principal.accessToken
                 call.sessions.set(SongportSession(userId))
 
-                call.loggedInSuccessResponse(principal.accessToken)
+                call.respondRedirect("/login_success.html")
             } else {
-                call.loginPage()
-            }
-        }
-    }
-}
-
-private suspend fun ApplicationCall.loginPage() {
-    respondHtml {
-        head {
-            title {
-                +"Login with"
-            }
-        }
-
-        body {
-            h1 {
-                +"Login with:"
-            }
-
-            for ((key, _) in loginProviders) {
-                p {
-                    a(href = "/login/$key") {
-                        +key
-                    }
-                }
-            }
-        }
-    }
-}
-
-private suspend fun ApplicationCall.loggedInSuccessResponse(token: String) {
-    respondHtml {
-        head {
-            title { +"Logged in" }
-        }
-
-        body {
-            h1 {
-                +"You are logged in"
-            }
-
-            p {
-                +"Your token is $token"
+                call.respondRedirect("/login.html")
             }
         }
     }
