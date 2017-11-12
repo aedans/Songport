@@ -49,6 +49,7 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
                 a(href = "/playlists/$it") {
                     +playlist.title
                 }
+                br
             }
         } ?: run {
             +"Import from Spotify"

@@ -4,6 +4,7 @@ import com.ackdevelopment.songport.getPlaylist
 import com.ackdevelopment.songport.getSong
 import com.ackdevelopment.songport.models.Playlist
 import kotlinx.html.a
+import kotlinx.html.br
 import kotlinx.html.h1
 import kotlinx.html.style
 import org.jetbrains.ktor.http.ContentType
@@ -33,9 +34,10 @@ fun getPlaylistHtml(playlist: Playlist) = songportHtml(playlist.title) {
 
         playlist.songIds.forEach {
             val song = getSong(it)!!
-            a(href = "/song/$it") {
+            a(href = "/songs/$it") {
                 +song.title
             }
+            br
         }
     }
 }
