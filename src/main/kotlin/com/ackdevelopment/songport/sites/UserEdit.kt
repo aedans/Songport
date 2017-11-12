@@ -8,22 +8,30 @@ import kotlinx.html.stream.createHTML
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
+import org.jetbrains.ktor.response.respondRedirect
 import org.jetbrains.ktor.response.respondText
 import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.sessions.get
 import org.jetbrains.ktor.sessions.sessions
-import java.awt.im.spi.InputMethod
 
 @location("/user/edit")
 class UserEdit
 
 fun Routing.userEdit() {
     get<UserEdit> {
-        val session = call.sessions.get<SongportSession>()!!
-        val (username, passwordDigest) = session.userId.split(':')
-        val user = getUser(username)!!
-        if (passwordDigest == user.password) {
-            call.respondText(getUserEditHtml(user), ContentType.Text.Html)
+        val session = call.sessions.get<SongportSession>()
+        if (session == null) {
+            call.respondRedirect("/login.html")
+        } else {
+            val (username, passwordDigest) = session.userId.split(':')
+            val user = getUser(username)
+            if (user == null) {
+                call.respondCouldNotFind("user", username)
+            } else {
+                if (passwordDigest == user.password) {
+                    call.respondText(getUserEditHtml(user), ContentType.Text.Html)
+                }
+            }
         }
     }
 }

@@ -15,8 +15,12 @@ class Users(val id: String)
 
 fun Routing.users() {
     get<Users> {
-        val user = getUser(it.id)!!
-        call.respondText(getUserHtml(user), ContentType.Text.Html)
+        val user = getUser(it.id)
+        if (user == null) {
+            call.respondCouldNotFind("user", it.id)
+        } else {
+            call.respondText(getUserHtml(user), ContentType.Text.Html)
+        }
     }
 }
 

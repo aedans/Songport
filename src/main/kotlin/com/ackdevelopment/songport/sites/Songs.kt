@@ -15,8 +15,12 @@ class Songs(val id: String)
 
 fun Routing.songs() {
     get<Songs> {
-        val song = getSong(it.id)!!
-        call.respondText(getSongHtml(song), ContentType.Text.Html)
+        val song = getSong(it.id)
+        if (song == null) {
+            call.respondCouldNotFind("song", it.id)
+        } else {
+            call.respondText(getSongHtml(song), ContentType.Text.Html)
+        }
     }
 }
 

@@ -13,8 +13,12 @@ class User
 
 fun Routing.user() {
     get<User> {
-        val session = call.sessions.get<SongportSession>()!!
-        val (username, _) = session.userId.split(':')
-        call.respondRedirect("/users/$username")
+        val session = call.sessions.get<SongportSession>()
+        if (session == null) {
+            call.respondRedirect("/login.html")
+        } else {
+            val (username, _) = session.userId.split(':')
+            call.respondRedirect("/users/$username")
+        }
     }
 }

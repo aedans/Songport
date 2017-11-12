@@ -15,8 +15,12 @@ class Playlists(val id: String)
 
 fun Routing.playlists() {
     get<Playlists> {
-        val playlist = getPlaylist(it.id)!!
-        call.respondText(getPlaylistHtml(playlist), ContentType.Text.Html)
+        val playlist = getPlaylist(it.id)
+        if (playlist == null) {
+            call.respondCouldNotFind("playlist", it.id)
+        } else {
+            call.respondText(getPlaylistHtml(playlist), ContentType.Text.Html)
+        }
     }
 }
 
