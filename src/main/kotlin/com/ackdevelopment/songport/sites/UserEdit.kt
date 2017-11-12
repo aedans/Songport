@@ -1,9 +1,6 @@
 package com.ackdevelopment.songport.sites
 
-import com.ackdevelopment.songport.SongportSession
-import com.ackdevelopment.songport.apiMap
-import com.ackdevelopment.songport.getUser
-import com.ackdevelopment.songport.getUsernameAndPassword
+import com.ackdevelopment.songport.*
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.models.title
 import com.ackdevelopment.songport.services.SpotifyService
@@ -46,11 +43,8 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
         }
 
         getUser(user.title)?.spotifyAuthCode?.let {
-            apiMap[user.title]?.let {
-                it.mySavedTracks.build().get().items.forEach {
-                    +it.track.name
-                    br
-                }
+            getSongs().find().iterator().asSequence().forEach {
+                +it.toString()
             }
         } ?: run {
             +"Import from Spotify"
