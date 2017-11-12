@@ -1,5 +1,7 @@
-package com.ackdevelopment.songport
+package com.ackdevelopment.songport.users
 
+import com.ackdevelopment.songport.SongportSession
+import com.ackdevelopment.songport.getUser
 import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.post

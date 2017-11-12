@@ -1,6 +1,7 @@
-package com.ackdevelopment.songport
+package com.ackdevelopment.songport.users
 
 import com.ackdevelopment.songport.models.User
+import com.ackdevelopment.songport.putUser
 import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.post
 import org.jetbrains.ktor.request.receive
