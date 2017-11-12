@@ -1,5 +1,6 @@
 package com.ackdevelopment.songport
 
+import com.ackdevelopment.songport.services.SpotifyApi
 import com.ackdevelopment.songport.services.SpotifyService
 import org.jetbrains.ktor.http.HttpStatusCode
 import org.jetbrains.ktor.locations.location
@@ -18,11 +19,14 @@ typealias ClientID = String
 
 typealias LoginHandler = (ClientID) -> AuthRedirectURL
 
+val clientID = "spotify-clientId.secret".readText()
+val clientSecret = "spotify-client-secret.secret".readText()
+
 val serviceLoginHandlers = mapOf<String, LoginHandler>(
         "spotify" to { _ ->
             SpotifyService.getAuthenticationURL(
-                    "spotify-clientId.secret".readText(),
-                    "spotify-client-secret.secret".readText(),
+                    clientID,
+                    clientSecret,
                     "http://$songportURL/services/spotify/auth")
         }
 )
@@ -38,8 +42,13 @@ fun Routing.services() {
             println("Storing the code in the database")
             getUser(username)?.copy(spotifyAuthCode = it)?.let { database.getCollection("users").updateOneById(it._id, it) }
                 ?: throw Exception("user $username does not exist")
-            val api = SpotifyService.privilegedInstance(username)
-            api.native.mySavedTracks.build().get().items.forEach { println(it) }
+
+            val api = SpotifyApi.builder()
+                    .clientSecret(clientSecret)
+                    .clientId(clientID)
+                    .build()
+            val service = SpotifyService.privilegedInstance(api, username)
+            service.native.mySavedTracks.build().get().items.forEach { println(it) }
             call.respondRedirect("/user/edit")
         } ?: run {
             serviceLoginHandlers[service]?.invoke(username)?.let {

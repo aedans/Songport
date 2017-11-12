@@ -87,8 +87,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
             return api.createAuthorizeURL(scopes, state)
         }
 
-        fun privilegedInstance(name: String): SpotifyService {
-            val api = Api.builder().build()
+        fun privilegedInstance(api: SpotifyApi, name: String): SpotifyService {
             getUser(name)?.spotifyAuthCode?.let {
                 println("CODE: $it")
                 val refresh = api.authorizationCodeGrant(it).build().get()
