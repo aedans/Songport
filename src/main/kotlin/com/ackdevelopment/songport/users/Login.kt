@@ -1,6 +1,7 @@
 package com.ackdevelopment.songport.users
 
 import com.ackdevelopment.songport.SongportSession
+import com.ackdevelopment.songport.digest
 import com.ackdevelopment.songport.getUser
 import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.locations.location
@@ -11,15 +12,11 @@ import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.sessions.sessions
 import org.jetbrains.ktor.sessions.set
 import org.jetbrains.ktor.util.ValuesMap
-import org.jetbrains.ktor.util.getDigestFunction
-import java.nio.charset.Charset
 
 @location("/login")
 class Login
 
 suspend fun ApplicationCall.redirectToLogin() = respondRedirect("/login.html")
-
-val digest = { it: String -> getDigestFunction("MD5", "")(it).toString(Charset.defaultCharset()) }
 
 fun Routing.login() {
     post<Login> {

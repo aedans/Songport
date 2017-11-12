@@ -11,12 +11,12 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
 
     private fun SpotifyApi.findPlaylist(name: String) =
             api.getPlaylistsForUser(userID).build().get().items.find { it.name == name }
-            ?: throw Exception("Unable to find playlist with name $name")
+            ?: throw Exception("Unable to find playlist with title $name")
 
     /* TODO possibilities */
     private fun SpotifyApi.findSongByName(name: String) =
             api.searchTracks(name).build().get().items.find { it.name == name }
-            ?: throw Exception("Unable to find song with name $name")
+            ?: throw Exception("Unable to find song with title $name")
 
     override fun createPlaylist(name: String) {
         TODO("not implemented")
@@ -30,8 +30,8 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
     override fun updatePlaylist(name: String, songs: List<Song>) {
         TODO("not supported")
         /*
-        api.findPlaylist(name).let {
-            api.addTracksToPlaylist(userID, it.id, songs.map { api.findSongByName(it.title).name })
+        api.findPlaylist(title).let {
+            api.addTracksToPlaylist(userID, it.id, songs.map { api.findSongByName(it.title).title })
         }
         */
     }
@@ -54,7 +54,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
     override fun removeSong(name: String) {
         api.mySavedTracks.build().get().items.find { it.track.name == name }?.let {
             api.removeFromMySavedTracks(listOf(it.track.id))
-        } ?: throw Exception("Unable to remove song with name $name, as it does not exist")
+        } ?: throw Exception("Unable to remove song with title $name, as it does not exist")
     }
 
     companion object {
@@ -83,8 +83,8 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
 
         /* TODO
         fun authorizedInstance(authCode: String): SpotifyService {
-            //val name = api.me.build().get().id
-            //return SpotifyService(name, api)
+            //val title = api.me.build().get().id
+            //return SpotifyService(title, api)
         }
         */
     }

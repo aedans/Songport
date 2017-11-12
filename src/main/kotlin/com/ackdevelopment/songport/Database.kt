@@ -20,6 +20,10 @@ fun getPlaylists() = database.getCollection<Playlist>("playlists")
 
 fun getPlaylist(id: String) = getPlaylists().findOneById(id)
 
+fun putPlaylist(playlist: Playlist) = getPlaylists().insertOne(playlist)
+
 fun getSongs() = database.getCollection<Song>("songs")
 
 fun getSong(id: String) = getSongs().findOneById(id)
+
+fun putSong(song: Song) = getSongs().insertOne(song)

@@ -9,7 +9,7 @@ import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.response.respondText
 import org.jetbrains.ktor.routing.Routing
 
-const val INDEX = "${WEBSITE}/index.html"
+const val INDEX = "$WEBSITE/index.html"
 
 @location("/")
 class Index

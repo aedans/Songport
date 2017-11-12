@@ -3,11 +3,11 @@
 package com.ackdevelopment.songport
 
 import com.ackdevelopment.songport.sites.index
+import com.ackdevelopment.songport.sites.playlists
 import com.ackdevelopment.songport.users.login
 import com.ackdevelopment.songport.sites.songs
 import com.ackdevelopment.songport.sites.website
 import com.ackdevelopment.songport.users.register
-import com.ackdevelopment.songport.users.users
 import org.jetbrains.ktor.application.Application
 import org.jetbrains.ktor.application.install
 import org.jetbrains.ktor.features.CallLogging
@@ -20,6 +20,7 @@ import org.jetbrains.ktor.sessions.Sessions
 import org.jetbrains.ktor.sessions.cookie
 
 const val WEBSITE = "./website"
+const val TEMPLATES = "./templates"
 
 data class SongportSession(val userId: String)
 
@@ -36,7 +37,7 @@ fun Application.install() {
         index()
         register()
         login()
-        users()
+        playlists()
         songs()
         website()
         services()
