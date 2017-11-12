@@ -99,6 +99,7 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
                 api.setAccessToken(refresh.accessToken)
                 api.setRefreshToken(refresh.refreshToken)
             } ?: throw Exception("$name is an unauthenticated user")
+            apiMap[name] = api
             return SpotifyService(name, api)
         }
     }
