@@ -1,9 +1,9 @@
 package com.ackdevelopment.songport.sites
 
-import com.ackdevelopment.songport.TEMPLATES
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.User
-import com.ackdevelopment.songport.readText
+import kotlinx.html.*
+import kotlinx.html.stream.createHTML
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
 import org.jetbrains.ktor.locations.location
@@ -20,5 +20,17 @@ fun Routing.users() {
     }
 }
 
-fun getUserHtml(user: User) = "$TEMPLATES/user.html".readText()
-        .replace("%USER_TITLE%", user.title)
+fun getUserHtml(user: User) = createHTML().html {
+    head {
+        title(user.title.capitalize())
+        link(rel = "stylesheet", type = "text/css", href = "styles/songport.css") {
+
+        }
+    }
+
+    body {
+        h1 {
+            +user.title.capitalize()
+        }
+    }
+}
