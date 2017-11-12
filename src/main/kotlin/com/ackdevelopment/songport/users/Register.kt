@@ -5,10 +5,8 @@ import com.ackdevelopment.songport.digest
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.putUser
-import com.ackdevelopment.songport.sites.links
 import com.ackdevelopment.songport.sites.songportHtml
 import kotlinx.html.*
-import kotlinx.html.stream.createHTML
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.post

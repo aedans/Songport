@@ -1,7 +1,6 @@
 package com.ackdevelopment.songport.sites
 
 import kotlinx.html.a
-import kotlinx.html.div
 import kotlinx.html.h1
 import kotlinx.html.style
 import org.jetbrains.ktor.application.ApplicationCall
