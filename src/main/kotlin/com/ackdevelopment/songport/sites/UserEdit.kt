@@ -45,7 +45,9 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
         val user = getUser(user.title)!!
         user.spotifyAuthCode?.let {
             getPlaylists().find().forEach {
-                +it.title
+                a(href = "playlists/${it._id}") {
+                    +it.title
+                }
             }
         } ?: run {
             +"Import from Spotify"
