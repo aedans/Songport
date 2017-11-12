@@ -3,10 +3,8 @@ package com.ackdevelopment.songport.users
 import com.ackdevelopment.songport.SongportSession
 import com.ackdevelopment.songport.digest
 import com.ackdevelopment.songport.getUser
-import com.ackdevelopment.songport.sites.links
 import com.ackdevelopment.songport.sites.songportHtml
 import kotlinx.html.*
-import kotlinx.html.stream.createHTML
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.post
@@ -24,7 +22,7 @@ class Login
 
 fun Routing.login() {
     get("/login.html") {
-        call.respondText(getLoginHtml(), ContentType.Text.Html)
+        call.respondText(getLoginHtml(null), ContentType.Text.Html)
     }
 
     post<Login> {
@@ -36,18 +34,27 @@ fun Routing.login() {
 
         val user = getUser(username)
 
-        if (user != null && passwordDigest == user.password) {
-            call.sessions.set(SongportSession(username + ":" + passwordDigest))
+        when {
+            user == null -> call.respondText(getLoginHtml("Could not find user $username"), ContentType.Text.Html)
+            passwordDigest != user.password -> call.respondText(getLoginHtml("Incorrect password"), ContentType.Text.Html)
+            else -> {
+                call.sessions.set(SongportSession(username + ":" + passwordDigest))
 
-            call.respondRedirect("/user")
-        } else {
-            call.respondRedirect("/login_failure.html")
+                call.respondRedirect("/user")
+            }
         }
     }
 }
 
-fun getLoginHtml() = songportHtml("Login") {
+fun getLoginHtml(err: String?) = songportHtml("Login") {
     form(action = "/login", method = FormMethod.post) {
+        if (err != null) {
+            p {
+                style = "color: red"
+                +err
+            }
+        }
+
         +"Username:"
         br
         input(type = InputType.text, name = "username") {

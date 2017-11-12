@@ -2,6 +2,7 @@ package com.ackdevelopment.songport.users
 
 import com.ackdevelopment.songport.SongportSession
 import com.ackdevelopment.songport.digest
+import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.putUser
 import com.ackdevelopment.songport.sites.links
@@ -25,7 +26,7 @@ class Register
 
 fun Routing.register() {
     get("/register.html") {
-        call.respondText(getRegisterHtml(), ContentType.Text.Html)
+        call.respondText(getRegisterHtml(null), ContentType.Text.Html)
     }
 
     post<Register> {
@@ -35,16 +36,29 @@ fun Routing.register() {
 
         val passwordDigest = digest(password)
 
-        putUser(User(username, passwordDigest, emptyList(), null))
+        val user = getUser(username)
 
-        call.sessions.set(SongportSession(username + ":" + passwordDigest))
+        if (user != null) {
+            call.respondText(getRegisterHtml("User $username already exists"), ContentType.Text.Html)
+        } else {
+            putUser(User(username, passwordDigest, emptyList(), null))
 
-        call.respondRedirect("/user")
+            call.sessions.set(SongportSession(username + ":" + passwordDigest))
+
+            call.respondRedirect("/user")
+        }
     }
 }
 
-fun getRegisterHtml() = songportHtml("Register") {
+fun getRegisterHtml(err: String?) = songportHtml("Register") {
     form(action = "/register", method = FormMethod.post) {
+        if (err != null) {
+            p {
+                style = "color: red"
+                +err
+            }
+        }
+
         +"Username:"
         br
         input(type = InputType.text, name = "username") {
