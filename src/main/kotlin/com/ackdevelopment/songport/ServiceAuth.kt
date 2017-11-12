@@ -2,9 +2,8 @@ package com.ackdevelopment.songport
 
 import com.ackdevelopment.songport.services.SpotifyApi
 import com.ackdevelopment.songport.services.SpotifyService
-import org.jetbrains.ktor.http.HttpStatusCode
-import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.locations.get
+import org.jetbrains.ktor.locations.location
 import org.jetbrains.ktor.response.respondRedirect
 import org.jetbrains.ktor.routing.Routing
 import org.jetbrains.ktor.sessions.get

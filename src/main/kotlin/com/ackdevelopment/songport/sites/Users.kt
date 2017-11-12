@@ -3,7 +3,6 @@ package com.ackdevelopment.songport.sites
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.models.title
-import kotlinx.html.div
 import kotlinx.html.h1
 import kotlinx.html.style
 import org.jetbrains.ktor.http.ContentType
