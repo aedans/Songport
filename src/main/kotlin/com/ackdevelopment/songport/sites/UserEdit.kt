@@ -3,7 +3,6 @@ package com.ackdevelopment.songport.sites
 import com.ackdevelopment.songport.*
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.models.title
-import com.ackdevelopment.songport.services.SpotifyService
 import kotlinx.html.*
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
@@ -42,9 +41,11 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
             +"Edit ${user.title.capitalize()}"
         }
 
-        getUser(user.title)?.spotifyAuthCode?.let {
-            getSongs().find().iterator().asSequence().forEach {
-                +it.toString()
+        @Suppress("NAME_SHADOWING")
+        val user = getUser(user.title)!!
+        user.spotifyAuthCode?.let {
+            getPlaylists().find().forEach {
+                +it.title
             }
         } ?: run {
             +"Import from Spotify"

@@ -1,10 +1,7 @@
 package com.ackdevelopment.songport.services
 
-import com.ackdevelopment.songport.apiMap
-import com.ackdevelopment.songport.database
-import com.ackdevelopment.songport.getUser
+import com.ackdevelopment.songport.*
 import com.ackdevelopment.songport.models.*;
-import com.ackdevelopment.songport.putSong
 import com.wrapper.spotify.Api
 import org.jetbrains.ktor.application.ApplicationCall
 import org.jetbrains.ktor.response.respondRedirect
@@ -98,14 +95,21 @@ class SpotifyService(private val userID: String, private val api: SpotifyApi): S
                 setAccessToken(refresh.accessToken)
                 setRefreshToken(refresh.refreshToken)
             }
-            api.mySavedTracks.build().get().items.forEach {
-                putSong(Song(
+            val mySavedTracks = api.mySavedTracks.build().get().items
+            val mySavedSongs = mySavedTracks.map {
+                Song(
                         it.track.name,
                         it.track.album.name,
                         it.track.artists.first().name,
-                        it.track.duration.toLong()/1000,
-                        listOf("spotify")))
+                        it.track.duration.toLong() / 1000,
+                        listOf("spotify")
+                )
             }
+            mySavedSongs.forEach { putSong(it) }
+            putPlaylist(Playlist(
+                    "My Saved Tracks",
+                    mySavedSongs.map { it._id }
+            ))
             return SpotifyService(name, api)
         }
     }
