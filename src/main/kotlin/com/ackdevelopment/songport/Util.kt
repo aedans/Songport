@@ -18,4 +18,4 @@ fun externalIp() =
                 .third
                 .component1()?.ip ?: throw Exception("unable to get external ip")
 
-val songport_url = externalIp()
+val songportURL = externalIp()
