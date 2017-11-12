@@ -22,7 +22,7 @@ val serviceLoginHandlers = mapOf<String, LoginHandler>(
             SpotifyService.getAuthenticationURL(
                     "spotify-clientId.secret".readText(),
                     "spotify-client-secret.secret".readText(),
-                    "http://$songportURL/")
+                    "http://$songportURL")
         }
 )
 
