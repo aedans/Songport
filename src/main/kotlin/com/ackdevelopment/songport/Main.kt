@@ -2,11 +2,8 @@
 
 package com.ackdevelopment.songport
 
-import com.ackdevelopment.songport.sites.index
-import com.ackdevelopment.songport.sites.playlists
+import com.ackdevelopment.songport.sites.*
 import com.ackdevelopment.songport.users.login
-import com.ackdevelopment.songport.sites.songs
-import com.ackdevelopment.songport.sites.website
 import com.ackdevelopment.songport.users.register
 import org.jetbrains.ktor.application.Application
 import org.jetbrains.ktor.application.install
@@ -37,8 +34,9 @@ fun Application.install() {
         index()
         register()
         login()
-        playlists()
         songs()
+        users()
+        playlists()
         website()
         services()
     }

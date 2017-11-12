@@ -3,7 +3,7 @@ package com.ackdevelopment.songport.services
 import com.ackdevelopment.songport.models.*
 
 interface Service {
-    /* Playlist methods */
+    /* Playlists methods */
     fun createPlaylist(name: String)
     fun removePlaylist(name: String)
     fun updatePlaylist(name: String, songs: List<Song>)
