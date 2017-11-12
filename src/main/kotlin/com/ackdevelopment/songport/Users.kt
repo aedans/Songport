@@ -13,6 +13,8 @@ class UserPlaylist(val pid: String)
 
 fun Routing.userPlaylist() {
     get<UserPlaylist> {
+        val session = call.getSession()!!
+        val user = getUser(session.userId)!!
 
     }
 }

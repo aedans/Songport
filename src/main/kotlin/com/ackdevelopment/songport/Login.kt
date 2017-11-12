@@ -14,8 +14,6 @@ import org.jetbrains.ktor.sessions.set
 @location("/login/{type?}")
 class Login(val type: String = "")
 
-data class SongportSession(val userId: String)
-
 fun Routing.login() {
     location<Login> {
         authentication {
