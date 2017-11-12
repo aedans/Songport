@@ -47,14 +47,18 @@ fun getUserEditHtml(user: User) = createHTML().html {
             +"Edit ${user.title.capitalize()}"
         }
 
-        +"Import from Spotify"
-        br
-        form {
-            action = "/services/spotify/auth"
-            method = FormMethod.get
-            input {
-                type = InputType.submit
-                style = "background-color: #6AE368; color: black"
+        user.spotifyAuthCode?.apply {
+            +"Songs imported from spotify"
+        } ?: run {
+            +"Import from Spotify"
+            br
+            form {
+                action = "/services/spotify/auth"
+                method = FormMethod.get
+                input {
+                    type = InputType.submit
+                    style = "background-color: #6AE368; color: black"
+                }
             }
         }
     }

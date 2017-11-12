@@ -24,7 +24,7 @@ fun Routing.register() {
 
         val passwordDigest = digest(password)
 
-        putUser(User(username, passwordDigest, emptyList()))
+        putUser(User(username, passwordDigest, emptyList(), null))
 
         call.sessions.set(SongportSession(username + ":" + passwordDigest))
 
