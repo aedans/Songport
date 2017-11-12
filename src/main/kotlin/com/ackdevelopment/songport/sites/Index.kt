@@ -18,13 +18,13 @@ fun Routing.index() {
 }
 
 fun getIndexHtml() = songportHtml("Songport") {
-    a(href = "/register.html") {
+    a(classes = "button", href = "/register.html") {
         +"register"
     }
 
     br
 
-    a(href = "/login.html") {
+    a(classes = "button", href = "/login.html") {
         +"login"
     }
 }
