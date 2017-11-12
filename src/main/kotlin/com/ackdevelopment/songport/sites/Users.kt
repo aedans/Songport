@@ -1,8 +1,11 @@
 package com.ackdevelopment.songport.sites
 
+import com.ackdevelopment.songport.getPlaylist
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.models.User
 import com.ackdevelopment.songport.models.title
+import kotlinx.html.a
+import kotlinx.html.br
 import kotlinx.html.h1
 import kotlinx.html.style
 import org.jetbrains.ktor.http.ContentType
@@ -29,5 +32,13 @@ fun getUserHtml(user: User) = songportHtml(user.title.capitalize()) {
     h1 {
         style = "text-align: center"
         +user.title.capitalize()
+
+        user.playlistIds.forEach {
+            val playlist = getPlaylist(it)!!
+            a(href = "/playlists/$it") {
+                +playlist.title
+            }
+            br
+        }
     }
 }

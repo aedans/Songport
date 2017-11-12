@@ -34,7 +34,10 @@ fun getSongHtml(song: Song) = songportHtml(song.title) {
     br
 
     +"Artist: ${song.artist}"
+    br
     +"Album: ${song.album}"
-    +"Time: ${song.seconds} sec"
+    br
+    +"Time: ${song.seconds / 60}:${song.seconds % 60}"
+    br
     +"Services: ${song.services.joinToString(prefix = "", postfix = "")}"
 }
