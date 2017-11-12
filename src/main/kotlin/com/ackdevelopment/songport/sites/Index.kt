@@ -18,9 +18,11 @@ fun Routing.index() {
 
 fun getIndexHtml() = songportHtml("Songport") {
     div(classes = "centered") {
+        /*
         img(src = "/imgs/logo.jpg") {
 
         }
+        */
 
         br
 
