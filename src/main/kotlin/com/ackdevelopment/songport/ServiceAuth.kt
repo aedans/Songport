@@ -33,6 +33,7 @@ fun Routing.services() {
         call.request.queryParameters["code"]?.let {
             /* this is after the redirect back from authentication */
             println("The user's code is $it")
+            call.respondRedirect("/user/edit")
         } ?: run {
             serviceLoginHandlers[service]?.invoke(session.userId)?.let {
                 call.respondRedirect(it)
