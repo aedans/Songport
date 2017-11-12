@@ -45,6 +45,11 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
             +"Edit ${user.title.capitalize()}"
         }
 
+        apiMap[user.title]?.let {
+            it.mySavedTracks.build().get().items.forEach {
+                println(it.track.name)
+            }
+        }
         +"Import from Spotify"
         br
         form {
