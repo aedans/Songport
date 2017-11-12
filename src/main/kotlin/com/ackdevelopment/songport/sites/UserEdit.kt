@@ -45,19 +45,23 @@ fun getUserEditHtml(user: User) = songportHtml(user.title.capitalize()) {
             +"Edit ${user.title.capitalize()}"
         }
 
-        apiMap[user.title]?.let {
-            it.mySavedTracks.build().get().items.forEach {
-                println(it.track.name)
+        getUser(user.title)?.spotifyAuthCode?.let {
+            apiMap[user.title]?.let {
+                it.mySavedTracks.build().get().items.forEach {
+                    +it.track.name
+                    br
+                }
             }
-        }
-        +"Import from Spotify"
-        br
-        form {
-            action = "/services/spotify/auth"
-            method = FormMethod.get
-            input {
-                type = InputType.submit
-                style = "background-color: #6AE368; color: black"
+        } ?: run {
+            +"Import from Spotify"
+            br
+            form {
+                action = "/services/spotify/auth"
+                method = FormMethod.get
+                input {
+                    type = InputType.submit
+                    style = "background-color: #6AE368; color: black"
+                }
             }
         }
     }
