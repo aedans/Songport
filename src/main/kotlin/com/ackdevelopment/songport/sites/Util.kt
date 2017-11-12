@@ -11,6 +11,7 @@ fun songportHtml(title: String, body: DIV.() -> Unit) = createHTML().html {
 
     body {
         div {
+            style = "margin: 1em"
             body()
         }
     }

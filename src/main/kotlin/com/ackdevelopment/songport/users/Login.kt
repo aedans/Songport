@@ -4,6 +4,7 @@ import com.ackdevelopment.songport.SongportSession
 import com.ackdevelopment.songport.digest
 import com.ackdevelopment.songport.getUser
 import com.ackdevelopment.songport.sites.links
+import com.ackdevelopment.songport.sites.songportHtml
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
 import org.jetbrains.ktor.http.ContentType
@@ -45,31 +46,22 @@ fun Routing.login() {
     }
 }
 
-fun getLoginHtml() = createHTML().html {
-    head {
-        title("Login")
-        links()
-    }
+fun getLoginHtml() = songportHtml("Login") {
+    form(action = "/login", method = FormMethod.post) {
+        +"Username:"
+        br
+        input(type = InputType.text, name = "username") {
 
-    body {
-        div {
-            form(action = "/login", method = FormMethod.post) {
-                +"Username:"
-                br
-                input(type = InputType.text, name = "username") {
+        }
+        br
+        +"Password:"
+        br
+        input(type = InputType.password, name = "password") {
 
-                }
-                br
-                +"Password:"
-                br
-                input(type = InputType.password, name = "password") {
+        }
 
-                }
+        input(type = InputType.submit, name = "submit") {
 
-                input(type = InputType.submit, name = "submit") {
-
-                }
-            }
         }
     }
 }
