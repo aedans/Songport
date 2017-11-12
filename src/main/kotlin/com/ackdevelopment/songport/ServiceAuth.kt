@@ -30,15 +30,16 @@ fun Routing.services() {
     get<ServiceAuth> {
         val service = it.type
         val session = call.sessions.get<SongportSession>()!!
+        val username = session.getUsername()
         call.request.queryParameters["code"]?.let {
             /* this is after the redirect back from authentication */
             println("The user's code is $it")
             println("Storing the code in the database")
-            getUser(session.userId)?.copy(spotifyAuthCode = it)?.let { putUser(it) }
-                ?: throw Exception("user ${session.userId} does not exist")
+            getUser(username)?.copy(spotifyAuthCode = it)?.let { putUser(it) }
+                ?: throw Exception("user $username does not exist")
             call.respondRedirect("/user/edit")
         } ?: run {
-            serviceLoginHandlers[service]?.invoke(session.userId)?.let {
+            serviceLoginHandlers[service]?.invoke(username)?.let {
                 call.respondRedirect(it)
             } ?: run {
                 call.response.status(HttpStatusCode.NotFound)

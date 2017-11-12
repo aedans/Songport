@@ -18,6 +18,10 @@ import org.jetbrains.ktor.sessions.cookie
 
 data class SongportSession(val userId: String)
 
+fun SongportSession.getUsernameAndPassword() = userId.split(':').let { (a, b) -> a to b }
+fun SongportSession.getUsername() = getUsernameAndPassword().first
+fun SongportSession.getPassword() = getUsernameAndPassword().second
+
 fun Application.install() {
     install(DefaultHeaders)
     install(CallLogging)

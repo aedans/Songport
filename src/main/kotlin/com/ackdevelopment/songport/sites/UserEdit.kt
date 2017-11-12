@@ -2,6 +2,7 @@ package com.ackdevelopment.songport.sites
 
 import com.ackdevelopment.songport.SongportSession
 import com.ackdevelopment.songport.getUser
+import com.ackdevelopment.songport.getUsernameAndPassword
 import com.ackdevelopment.songport.models.User
 import kotlinx.html.*
 import kotlinx.html.stream.createHTML
@@ -23,7 +24,7 @@ fun Routing.userEdit() {
         if (session == null) {
             call.respondRedirect("/login.html")
         } else {
-            val (username, passwordDigest) = session.userId.split(':')
+            val (username, passwordDigest) = session.getUsernameAndPassword()
             val user = getUser(username)
             if (user == null) {
                 call.respondCouldNotFind("user", username)
