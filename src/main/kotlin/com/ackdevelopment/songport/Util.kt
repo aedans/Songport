@@ -8,6 +8,4 @@ fun String.readText() = File(this).readText()
 
 val songportURL = "198.199.116.233"
 
-val digest = { it: String ->
-    encodeBase64(getDigestFunction("MD5", "")(it)).replace("/", "%${'/'.toInt()}")
-}
+val digest = { it: String -> encodeBase64(getDigestFunction("MD5", "")(it)) }
