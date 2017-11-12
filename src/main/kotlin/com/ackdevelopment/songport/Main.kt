@@ -36,6 +36,7 @@ fun Application.install() {
         login()
         songs()
         users()
+        playlists()
         website()
         services()
     }
