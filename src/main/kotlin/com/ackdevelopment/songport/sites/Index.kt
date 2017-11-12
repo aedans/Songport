@@ -1,7 +1,6 @@
 package com.ackdevelopment.songport.sites
 
 import com.ackdevelopment.songport.WEBSITE
-import com.ackdevelopment.songport.async
 import com.ackdevelopment.songport.readText
 import org.jetbrains.ktor.http.ContentType
 import org.jetbrains.ktor.locations.get
@@ -16,8 +15,6 @@ class Index
 
 fun Routing.index() {
     get<Index> {
-        async {
-            call.respondText(INDEX.readText(), ContentType.Text.Html)
-        }
+        call.respondText(INDEX.readText(), ContentType.Text.Html)
     }
 }
