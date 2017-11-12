@@ -36,6 +36,8 @@ fun Routing.services() {
         } ?: run {
             serviceLoginHandlers[service]?.invoke(session.userId)?.let {
                 call.respondRedirect(it)
+                /* DO API STUFF NOW */
+                call.respondRedirect("/")
             } ?: run {
                 call.response.status(HttpStatusCode.NotFound)
                 call.respondRedirect("/service_failure.html")

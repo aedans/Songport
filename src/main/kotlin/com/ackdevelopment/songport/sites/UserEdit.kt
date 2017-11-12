@@ -50,7 +50,7 @@ fun getUserEditHtml(user: User) = createHTML().html {
         +"Import from Spotify"
         br
         form {
-            action = "services/spotify/auth"
+            action = "/services/spotify/auth"
             method = FormMethod.get
             input {
                 type = InputType.submit
